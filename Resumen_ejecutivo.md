@@ -1,0 +1,12 @@
+Resumen Ejecutivo
+Planteamiento del Problema
+El churn de clientes en seguros genera pérdidas significativas en ingresos y altos costos de adquisición. Este proyecto aborda un dataset anónimo de hackathon (33.908 registros en entrenamiento, 11.303 en prueba) para analizar patrones de abandono (churn global: 11.7%, desbalanceado 88.3% retención). El objetivo es identificar segmentos de riesgo, predecir churn con precisión, y cuantificar el impacto económico de intervenciones, priorizando un enfoque accionable y escalable en fintech/retail.
+Hallazgos Relevantes
+
+EDA: Features estandarizadas con outliers extremos en candidatas monetarias (feature_1/3) y conteos discretos en frecuencia (feature_7/14). Cardinalidad alta en continuas, baja en discretas/binarias. Desbalance confirmado; outliers indican clientes de alto valor/riesgo.
+Segmentación RFM: Adaptada a features anónimas (F: feature_7, M: feature_1), genera 25 segmentos con churn variando de 5.66% (bajo riesgo) a 20.78% (alto en alta frecuencia + baja monetaria). Prueba chi-cuadrado valida significancia (χ²=547.94, p=0.0000).
+Modelado Predictivo: Baseline Logística (AUC 0.8792, F1 churn 0.45 con umbral 0.40). Decision Tree (AUC 0.9072, F1 0.57). Random Forest optimizado (AUC 0.9997, F1 0.96, precision 93%, recall 100%). Curva Precision-Recall justifica umbral 0.40–0.50 para balance. Importancia: feature_3 domina (39.6%), seguida de conteos (feature_14/1).
+Submission: Con RF y umbral 0.40, predice ~10.8% churn en Test (conservador y preciso).
+
+Observaciones Finales / Conclusiones
+El Random Forest destaca por su precisión casi perfecta, capturando todos los churns reales con mínimas falsas alarmas —ideal para retención focalizada. Integra EDA/RFM para priorizar segmentos de alto riesgo, reduciendo churn potencial en 10–20% por grupo. Impacto económico: intervención en 1.219 clientes genera ahorro neto ~$506k y ROI 830% (asumiendo $500/churn evitado, $50/intervención). Conclusión: Implementar en producción priorizando monitoreo de feature_3; validar con A/B testing para tasas de éxito reales. Este enfoque demuestra ROI alto en seguros, escalable con datos adicionales. Sugerencias: Expandir a XGBoost para robustez, integrar SHAP para explicabilidad por cliente.
